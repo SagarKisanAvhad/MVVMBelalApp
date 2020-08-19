@@ -2,6 +2,7 @@ package com.sagar.mvvmbelalapp.ui.auth
 
 import android.view.View
 import androidx.lifecycle.ViewModel
+import com.sagar.mvvmbelalapp.data.repository.UserRepository
 
 class AuthViewModel : ViewModel() {
 
@@ -19,6 +20,7 @@ class AuthViewModel : ViewModel() {
         }
 
         //success
-        authListener?.onSuccess()
+        val loginResponse = UserRepository().userLogin(email!!, password!!)
+        authListener?.onSuccess(loginResponse)
     }
 }
