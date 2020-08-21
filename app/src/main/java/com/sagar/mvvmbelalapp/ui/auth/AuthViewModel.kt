@@ -3,6 +3,7 @@ package com.sagar.mvvmbelalapp.ui.auth
 import android.view.View
 import androidx.lifecycle.ViewModel
 import com.sagar.mvvmbelalapp.data.repository.UserRepository
+import com.sagar.mvvmbelalapp.util.ApiException
 import com.sagar.mvvmbelalapp.util.Coroutines
 
 class AuthViewModel : ViewModel() {
@@ -24,13 +25,24 @@ class AuthViewModel : ViewModel() {
 
         Coroutines.main {
 
-            val response = UserRepository().userLogin(email!!, password!!)
 
-            if (response.isSuccessful) {
+            try {
+                val authResponse = UserRepository().userLogin(email!!, password!!)
+                authResponse.user?.let {
+                    authListener?.onSuccess(it)
+                    return@main
+                }
+                authListener?.onFailure(authResponse.message!!)
+
+            } catch (e: ApiException) {
+                authListener?.onFailure(e.message!!)
+            }
+
+            /*if (response.isSuccessful) {
                 authListener?.onSuccess(response.body()?.user!!)
             } else {
                 authListener?.onFailure("Error code: ${response.code()}")
-            }
+            }*/
         }
 
 

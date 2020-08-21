@@ -1,13 +1,16 @@
 package com.sagar.mvvmbelalapp.data.repository
 
 import com.sagar.mvvmbelalapp.data.network.MyApi
+import com.sagar.mvvmbelalapp.data.network.SafeApiRequest
 import com.sagar.mvvmbelalapp.data.network.responses.AuthResponse
-import retrofit2.Response
 
-class UserRepository {
+class UserRepository : SafeApiRequest() {
 
-    suspend fun userLogin(email: String, password: String): Response<AuthResponse> {
-        return MyApi().userLogin(email, password)
+    suspend fun userLogin(email: String, password: String): AuthResponse {
+        return apiRequest { MyApi().userLogin(email, password) }
+
+
+        // return MyApi().userLogin(email, password)
 
         /*//created mutablelivedata. reason livedata is abstract class so can't create instant.
         val loginResponse = MutableLiveData<String>()
