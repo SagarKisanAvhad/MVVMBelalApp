@@ -9,7 +9,7 @@ import com.sagar.mvvmbelalapp.data.db.entities.User
 import com.sagar.mvvmbelalapp.databinding.ActivityLoginBinding
 import com.sagar.mvvmbelalapp.util.hide
 import com.sagar.mvvmbelalapp.util.show
-import com.sagar.mvvmbelalapp.util.toast
+import com.sagar.mvvmbelalapp.util.snackbar
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(), AuthListener {
@@ -31,7 +31,7 @@ class LoginActivity : AppCompatActivity(), AuthListener {
     override fun onSuccess(user: User) {
 
         progress_bar.hide()
-        toast("${user.name} is logged In")
+        root_layout.snackbar("${user.name} is logged In")
 
         /*loginResponse.observe(this, Observer {
             progress_bar.hide()
@@ -41,6 +41,6 @@ class LoginActivity : AppCompatActivity(), AuthListener {
 
     override fun onFailure(message: String) {
         progress_bar.hide()
-        toast(message)
+        root_layout.snackbar(message)
     }
 }
