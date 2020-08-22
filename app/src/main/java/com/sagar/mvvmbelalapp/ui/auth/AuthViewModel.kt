@@ -14,6 +14,9 @@ class AuthViewModel(
     var password: String? = null
     var authListener: AuthListener? = null
 
+    fun getLoggedInUser() = repository.getUser()
+
+
     fun onLoginButtonClicked(view: View) {
 
         authListener?.onStarted()
@@ -32,6 +35,7 @@ class AuthViewModel(
                 val authResponse = repository.userLogin(email!!, password!!)
                 authResponse.user?.let {
                     authListener?.onSuccess(it)
+                    repository.saveUser(it)
                     return@main
                 }
                 authListener?.onFailure(authResponse.message!!)
