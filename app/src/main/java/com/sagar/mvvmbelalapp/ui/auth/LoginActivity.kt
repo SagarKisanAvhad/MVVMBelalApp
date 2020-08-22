@@ -24,7 +24,6 @@ class LoginActivity : AppCompatActivity(), AuthListener {
         super.onCreate(savedInstanceState)
         val binding: ActivityLoginBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_login)
-        //val viewModel = ViewModelProviders.of(this,AuthViewModel::class.java)
 
         val networkConnectionInterceptor = NetworkConnectionInterceptor(this)
 
