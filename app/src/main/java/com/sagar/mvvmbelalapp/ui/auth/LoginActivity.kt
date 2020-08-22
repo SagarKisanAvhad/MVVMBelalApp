@@ -5,7 +5,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.sagar.mvvmbelalapp.R
+import com.sagar.mvvmbelalapp.data.db.AppDataBase
 import com.sagar.mvvmbelalapp.data.db.entities.User
+import com.sagar.mvvmbelalapp.data.network.MyApi
+import com.sagar.mvvmbelalapp.data.repository.UserRepository
 import com.sagar.mvvmbelalapp.databinding.ActivityLoginBinding
 import com.sagar.mvvmbelalapp.util.hide
 import com.sagar.mvvmbelalapp.util.show
@@ -19,7 +22,12 @@ class LoginActivity : AppCompatActivity(), AuthListener {
             DataBindingUtil.setContentView(this, R.layout.activity_login)
         //val viewModel = ViewModelProviders.of(this,AuthViewModel::class.java)
 
-        val viewModel: AuthViewModel by viewModels()
+        val api = MyApi()
+        val db = AppDataBase(this)
+        val repository = UserRepository(api, db)
+        val factory = AuthViewModelFactory(repository)
+
+        val viewModel: AuthViewModel by viewModels({ factory })
         viewModel.authListener = this
         binding.viewmodel = viewModel
     }

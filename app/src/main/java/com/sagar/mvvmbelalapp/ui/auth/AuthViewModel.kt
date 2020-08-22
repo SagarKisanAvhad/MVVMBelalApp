@@ -6,7 +6,9 @@ import com.sagar.mvvmbelalapp.data.repository.UserRepository
 import com.sagar.mvvmbelalapp.util.ApiException
 import com.sagar.mvvmbelalapp.util.Coroutines
 
-class AuthViewModel : ViewModel() {
+class AuthViewModel(
+    private val repository: UserRepository
+) : ViewModel() {
 
     var email: String? = null
     var password: String? = null
@@ -27,7 +29,7 @@ class AuthViewModel : ViewModel() {
 
 
             try {
-                val authResponse = UserRepository().userLogin(email!!, password!!)
+                val authResponse = repository.userLogin(email!!, password!!)
                 authResponse.user?.let {
                     authListener?.onSuccess(it)
                     return@main
