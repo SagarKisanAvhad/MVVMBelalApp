@@ -7,30 +7,26 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.sagar.mvvmbelalapp.R
-import com.sagar.mvvmbelalapp.data.db.AppDataBase
 import com.sagar.mvvmbelalapp.data.db.entities.User
-import com.sagar.mvvmbelalapp.data.network.MyApi
-import com.sagar.mvvmbelalapp.data.network.NetworkConnectionInterceptor
-import com.sagar.mvvmbelalapp.data.repository.UserRepository
 import com.sagar.mvvmbelalapp.databinding.ActivityLoginBinding
 import com.sagar.mvvmbelalapp.ui.home.HomeActivity
 import com.sagar.mvvmbelalapp.util.hide
 import com.sagar.mvvmbelalapp.util.show
 import com.sagar.mvvmbelalapp.util.snackbar
 import kotlinx.android.synthetic.main.activity_login.*
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
+import org.kodein.di.generic.instance
 
-class LoginActivity : AppCompatActivity(), AuthListener {
+class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
+
+    override val kodein by kodein()
+    private val factory: AuthViewModelFactory by instance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityLoginBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_login)
-
-        val networkConnectionInterceptor = NetworkConnectionInterceptor(this)
-
-        val api = MyApi(networkConnectionInterceptor)
-        val db = AppDataBase(this)
-        val repository = UserRepository(api, db)
-        val factory = AuthViewModelFactory(repository)
 
         val viewModel: AuthViewModel by viewModels { factory }
         viewModel.authListener = this
