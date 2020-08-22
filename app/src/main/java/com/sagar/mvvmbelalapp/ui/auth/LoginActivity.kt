@@ -10,6 +10,7 @@ import com.sagar.mvvmbelalapp.R
 import com.sagar.mvvmbelalapp.data.db.AppDataBase
 import com.sagar.mvvmbelalapp.data.db.entities.User
 import com.sagar.mvvmbelalapp.data.network.MyApi
+import com.sagar.mvvmbelalapp.data.network.NetworkConnectionInterceptor
 import com.sagar.mvvmbelalapp.data.repository.UserRepository
 import com.sagar.mvvmbelalapp.databinding.ActivityLoginBinding
 import com.sagar.mvvmbelalapp.ui.home.HomeActivity
@@ -25,7 +26,9 @@ class LoginActivity : AppCompatActivity(), AuthListener {
             DataBindingUtil.setContentView(this, R.layout.activity_login)
         //val viewModel = ViewModelProviders.of(this,AuthViewModel::class.java)
 
-        val api = MyApi()
+        val networkConnectionInterceptor = NetworkConnectionInterceptor(this)
+
+        val api = MyApi(networkConnectionInterceptor)
         val db = AppDataBase(this)
         val repository = UserRepository(api, db)
         val factory = AuthViewModelFactory(repository)

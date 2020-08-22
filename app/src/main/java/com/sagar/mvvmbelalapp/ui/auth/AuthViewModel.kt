@@ -29,8 +29,6 @@ class AuthViewModel(
         //success
 
         Coroutines.main {
-
-
             try {
                 val authResponse = repository.userLogin(email!!, password!!)
                 authResponse.user?.let {
