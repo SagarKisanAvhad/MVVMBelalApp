@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.sagar.mvvmbelalapp.data.repository.UserRepository
 import com.sagar.mvvmbelalapp.util.ApiException
 import com.sagar.mvvmbelalapp.util.Coroutines
+import com.sagar.mvvmbelalapp.util.NoInternetException
 
 class AuthViewModel(
     private val repository: UserRepository
@@ -40,17 +41,10 @@ class AuthViewModel(
 
             } catch (e: ApiException) {
                 authListener?.onFailure(e.message!!)
+            } catch (e: NoInternetException) {
+                authListener?.onFailure(e.message!!)
             }
-
-            /*if (response.isSuccessful) {
-                authListener?.onSuccess(response.body()?.user!!)
-            } else {
-                authListener?.onFailure("Error code: ${response.code()}")
-            }*/
         }
 
-
-        //val loginResponse = UserRepository().userLogin(email!!, password!!)
-        //authListener?.onSuccess(loginResponse)
     }
 }
