@@ -18,6 +18,14 @@ interface MyApi {
         @Field("password") password: String
     ): Response<AuthResponse>
 
+    @FormUrlEncoded
+    @POST("signup")
+    suspend fun userSignup(
+        @Field("name") name: String,
+        @Field("email") email: String,
+        @Field("password") password: String
+    ): Response<AuthResponse>
+
     companion object {
         operator fun invoke(networkInterceptor: NetworkConnectionInterceptor): MyApi {
             val okHttpClient = OkHttpClient.Builder()
