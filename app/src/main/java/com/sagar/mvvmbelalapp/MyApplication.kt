@@ -6,6 +6,7 @@ import com.sagar.mvvmbelalapp.data.network.MyApi
 import com.sagar.mvvmbelalapp.data.network.NetworkConnectionInterceptor
 import com.sagar.mvvmbelalapp.data.repository.UserRepository
 import com.sagar.mvvmbelalapp.ui.auth.AuthViewModelFactory
+import com.sagar.mvvmbelalapp.ui.home.profile.ProfileViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -23,6 +24,7 @@ class MyApplication : Application(), KodeinAware {
         bind() from singleton { AppDataBase(instance()) }
         bind() from singleton { UserRepository(instance(), instance()) }
         bind() from provider { AuthViewModelFactory(instance()) }
+        bind() from provider { ProfileViewModelFactory(instance()) }
 
     }
 }
