@@ -4,6 +4,7 @@ import android.app.Application
 import com.sagar.mvvmbelalapp.data.db.AppDataBase
 import com.sagar.mvvmbelalapp.data.network.MyApi
 import com.sagar.mvvmbelalapp.data.network.NetworkConnectionInterceptor
+import com.sagar.mvvmbelalapp.data.preferences.PreferenceProvider
 import com.sagar.mvvmbelalapp.data.repository.QuoteRepository
 import com.sagar.mvvmbelalapp.data.repository.UserRepository
 import com.sagar.mvvmbelalapp.ui.auth.AuthViewModelFactory
@@ -24,8 +25,9 @@ class MyApplication : Application(), KodeinAware {
         bind() from singleton { NetworkConnectionInterceptor(instance()) }
         bind() from singleton { MyApi(instance()) }
         bind() from singleton { AppDataBase(instance()) }
+        bind() from singleton { PreferenceProvider(instance()) }
         bind() from singleton { UserRepository(instance(), instance()) }
-        bind() from singleton { QuoteRepository(instance(), instance()) }
+        bind() from singleton { QuoteRepository(instance(), instance(), instance()) }
         bind() from provider { AuthViewModelFactory(instance()) }
         bind() from provider { ProfileViewModelFactory(instance()) }
         bind() from provider { QuotesViewModelFactory(instance()) }

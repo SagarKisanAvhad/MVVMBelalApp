@@ -28,7 +28,6 @@ interface MyApi {
         @Field("password") password: String
     ): Response<AuthResponse>
 
-    @FormUrlEncoded
     @GET("quotes")
     suspend fun quotes(): Response<QuoteResponse>
 

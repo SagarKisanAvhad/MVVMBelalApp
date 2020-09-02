@@ -30,6 +30,7 @@ class QuotesFragment : Fragment(), KodeinAware {
         val binding: QuotesFragmentBinding =
             DataBindingUtil.inflate(inflater, R.layout.quotes_fragment, container, false)
         binding.viewmodel = viewModel
+
         Coroutines.main {
             viewModel.quotes.await().observe(viewLifecycleOwner, Observer {
                 context?.toast(it.size.toString())
