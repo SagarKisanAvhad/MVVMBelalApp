@@ -93,4 +93,9 @@ dependencies {
     //preference manager
     implementation 'androidx.preference:preference:1.1.1'
 
+    //groupie
+    implementation 'com.xwray:groupie:2.3.0'
+    implementation 'com.xwray:groupie-kotlin-android-extensions:2.3.0'
+    implementation 'com.xwray:groupie-databinding:2.3.0'
+
 }
